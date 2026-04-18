@@ -1,14 +1,45 @@
 package org.example.energygui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+
 
 public class HelloController {
     @FXML
-    private Label welcomeText;
+    private Label communityPool;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private Label gridPool;
+
+    @FXML
+    private Label start;
+
+    @FXML
+    private Label end;
+
+    @FXML
+    private Label comminityProduced;
+
+    @FXML
+    private Label communityUsed;
+
+    @FXML
+    private Label gridUsed;
+
+    @FXML
+    private ComboBox<String> startComboBox;
+
+    @FXML
+    private ComboBox<String> endComboBox;
+
+
+    @FXML
+    protected void onButtonRefreshClick() {
     }
+
+    @FXML
+    protected void onButtonShowDataClick() {}
+
 }
+
