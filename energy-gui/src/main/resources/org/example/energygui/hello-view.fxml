@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -46,10 +46,10 @@
             </rowConstraints>
             <children>
                 <Button mnemonicParsing="false" onAction="#onButtonShowDataClick" text="show data" GridPane.rowIndex="2" />
-                <Label fx:id="start" text="Start" />
-                <Label fx:id="end" text="End" GridPane.rowIndex="1" />
-            <ComboBox fx:id="startComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="endComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Start" />
+                <Label text="End" GridPane.rowIndex="1" />
+                <DatePicker fx:id="startDatePicker" prefWidth="150.0" GridPane.columnIndex="1" />
+                <DatePicker fx:id="endDatePicker" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
         </GridPane>
         <Separator prefWidth="200.0" />
