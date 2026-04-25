@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.net.URI;
@@ -34,12 +34,6 @@ public class HelloController {
     private Label gridPool;
 
     @FXML
-    private Label start;
-
-    @FXML
-    private Label end;
-
-    @FXML
     private Label comminityProduced;
 
     @FXML
@@ -49,10 +43,10 @@ public class HelloController {
     private Label gridUsed;
 
     @FXML
-    private ComboBox<String> startComboBox;
+    private DatePicker startDatePicker;
 
     @FXML
-    private ComboBox<String> endComboBox;
+    private DatePicker endDatePicker;
 
     @FXML
     protected void onButtonRefreshClick() {
@@ -78,21 +72,27 @@ public class HelloController {
             }
         };
 
-        task.setOnFailed(
-                e -> Platform.runLater(() -> communityPool.setText("Error: " + task.getException().getMessage())));
+        task.setOnFailed(e -> Platform.runLater(() -> {
+            String errorMsg = "Error: " + task.getException().getMessage();
+            communityPool.setText(errorMsg);
+            gridPool.setText(errorMsg);
+        }));
 
         new Thread(task).start();
     }
 
     @FXML
     protected void onButtonShowDataClick() {
-        String startValue = startComboBox.getValue();
-        String endValue = endComboBox.getValue();
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
 
-        if (startValue == null || endValue == null) {
+        if (startDate == null || endDate == null) {
             comminityProduced.setText("Please select both dates.");
             return;
         }
+
+        String startValue = startDate.atStartOfDay().format(ISO_FMT);
+        String endValue = endDate.atStartOfDay().format(ISO_FMT);
 
         String startEncoded = URLEncoder.encode(startValue, StandardCharsets.UTF_8);
         String endEncoded = URLEncoder.encode(endValue, StandardCharsets.UTF_8);
@@ -119,7 +119,6 @@ public class HelloController {
                 }
 
                 final double fp = totalProduced, fu = totalUsed, fg = totalGrid;
-                final int count = array.size();
 
                 Platform.runLater(() -> {
                     comminityProduced.setText(String.format("%.3f kWh", fp));
@@ -130,8 +129,12 @@ public class HelloController {
             }
         };
 
-        task.setOnFailed(
-                e -> Platform.runLater(() -> comminityProduced.setText("Error: " + task.getException().getMessage())));
+        task.setOnFailed(e -> Platform.runLater(() -> {
+            String errorMsg = "Error: " + task.getException().getMessage();
+            comminityProduced.setText(errorMsg);
+            communityUsed.setText(errorMsg);
+            gridUsed.setText(errorMsg);
+        }));
 
         new Thread(task).start();
     }
