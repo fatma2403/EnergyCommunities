@@ -1,3 +1,5 @@
+package org.example;
+
 public class UsageData {
     private String hour;
     private double communityProduced;

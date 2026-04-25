@@ -1,3 +1,5 @@
+package org.example;
+
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
