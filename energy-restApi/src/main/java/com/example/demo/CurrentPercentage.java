@@ -16,4 +16,5 @@ public class CurrentPercentage {
     public void setHour(String hour)                           { this.hour = hour; }
     public void setCommunityDepleted(double communityDepleted) { this.communityDepleted = communityDepleted; }
     public void setGridPortion(double gridPortion)             { this.gridPortion = gridPortion; }
+    /*ss*/
 }
