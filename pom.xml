@@ -8,6 +8,10 @@
     <groupId>com.example</groupId>
     <artifactId>energy-restApi</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>producer-service</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
