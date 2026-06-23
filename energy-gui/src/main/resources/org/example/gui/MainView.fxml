@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gui.Controller"
+            prefWidth="640" prefHeight="500">
+
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label text="Community Pool:"/>
+                <Label fx:id="communityLabel" text="- %" style="-fx-font-size: 16px;"/>
+                <Label text="Grid Portion:"/>
+                <Label fx:id="gridLabel" text="- %" style="-fx-font-size: 16px;"/>
+                <Button fx:id="refreshButton" text="Refresh"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Start:"/>
+                    <DatePicker fx:id="startDatePicker"/>
+                    <TextField fx:id="startTimeField" text="00:00:00"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="End:"/>
+                    <DatePicker fx:id="endDatePicker"/>
+                    <TextField fx:id="endTimeField" text="23:00:00"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text=" "/>
+                    <Button fx:id="showDataButton" text="Show data"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="historyTable" prefHeight="250">
+            <columns>
+                <TableColumn fx:id="hourColumn" text="Hour" prefWidth="180"/>
+                <TableColumn fx:id="producedColumn" text="Community produced" prefWidth="150"/>
+                <TableColumn fx:id="usedColumn" text="Community used" prefWidth="150"/>
+                <TableColumn fx:id="gridColumn" text="Grid used" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <VBox spacing="5">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label fx:id="producedTotalLabel" text="Community produced 0.000 kWh"/>
+            <Label fx:id="usedTotalLabel" text="Community used 0.000 kWh"/>
+            <Label fx:id="gridTotalLabel" text="Grid used 0.000 kWh"/>
+            <Label fx:id="statusLabel" text="Bereit."/>
+        </VBox>
+    </bottom>
+
+</BorderPane>
