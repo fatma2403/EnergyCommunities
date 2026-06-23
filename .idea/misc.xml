@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/energy-gui/pom.xml" />
         <option value="$PROJECT_DIR$/energy-RestApi1/pom.xml" />
+        <option value="$PROJECT_DIR$/percentage-service/pom.xml" />
       </list>
     </option>
   </component>
