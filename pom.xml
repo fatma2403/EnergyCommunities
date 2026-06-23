@@ -1,34 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://www.w3.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>energy-restApi</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>energy-communities</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>producer-service</module>
-    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
+        <relativePath/>
     </parent>
-
-    <dependencies>
-        <!-- Spring Boot Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-    </dependencies>
 
     <properties>
         <java.version>17</java.version>
     </properties>
+
+    <!-- Die fuenf Backend-Dienste. Die JavaFX-GUI hat ein eigenes pom.xml. -->
+    <modules>
+        <module>producer-service</module>
+        <module>user-service</module>
+        <module>usage-service</module>
+        <module>percentage-service</module>
+        <module>rest-api</module>
+    </modules>
 
 </project>

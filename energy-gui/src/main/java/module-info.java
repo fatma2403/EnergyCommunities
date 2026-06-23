@@ -1,13 +1,9 @@
-module org.example.energygui {
+module org.example.gui {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.net.http;
-    requires com.fasterxml.jackson.databind;
-    requires javafx.graphics;
-    requires javafx.base;
     requires org.json;
 
-    opens org.example.energygui to javafx.fxml;
-
-    exports org.example.energygui;
+    opens org.example.gui to javafx.fxml;
+    exports org.example.gui;
 }
