@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,6 +58,41 @@ public class Controller {
         usedColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCommunityUsed()));
         gridColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getGridUsed()));
 
+        // Formatieren der double-Werte auf 3 Nachkommastellen
+        producedColumn.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format(Locale.US, "%.3f", item.doubleValue()));
+                }
+            }
+        });
+        usedColumn.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format(Locale.US, "%.3f", item.doubleValue()));
+                }
+            }
+        });
+        gridColumn.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Number item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format(Locale.US, "%.3f", item.doubleValue()));
+                }
+            }
+        });
+
         refreshButton.setOnAction(e -> loadCurrent());
         showDataButton.setOnAction(e -> loadHistorical());
     }
@@ -86,6 +122,18 @@ public class Controller {
     // Holt die historischen Stundenwerte fuer den gewaehlten Zeitraum.
     private void loadHistorical() {
         try {
+            if (startDatePicker.getValue() == null || endDatePicker.getValue() == null) {
+                statusLabel.setText("Bitte Start- und Enddatum auswählen!");
+                return;
+            }
+            if (startTimeField.getText() == null || startTimeField.getText().isBlank()) {
+                statusLabel.setText("Bitte Startzeit eingeben (z.B. 00:00:00)!");
+                return;
+            }
+            if (endTimeField.getText() == null || endTimeField.getText().isBlank()) {
+                statusLabel.setText("Bitte Endzeit eingeben (z.B. 23:00:00)!");
+                return;
+            }
             String start = startDatePicker.getValue().atTime(LocalTime.parse(startTimeField.getText())).format(ISO);
             String end = endDatePicker.getValue().atTime(LocalTime.parse(endTimeField.getText())).format(ISO);
 
