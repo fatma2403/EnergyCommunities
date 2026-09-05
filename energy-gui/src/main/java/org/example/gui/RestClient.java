@@ -21,6 +21,9 @@ public class RestClient {
                 .GET()
                 .build();
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() >= 400) {
+            throw new RuntimeException("Server antwortete mit Statuscode " + response.statusCode());
+        }
         return response.body();
     }
 
@@ -34,6 +37,9 @@ public class RestClient {
                 .GET()
                 .build();
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() >= 400) {
+            throw new RuntimeException("Server antwortete mit Statuscode " + response.statusCode());
+        }
         return response.body();
     }
 }

@@ -1,20 +1,18 @@
 package org.example;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 import java.util.Random;
 
 // Community Energy Producer.
-// Schickt alle paar Sekunden eine PRODUCER-Nachricht in die Queue.
+// Schickt in zufaelligen 1-5 Sekunden Intervallen eine PRODUCER-Nachricht in die Queue.
 // Wenn die Sonne scheint (wenig Wolken), wird mehr Strom produziert.
 @SpringBootApplication
-@EnableScheduling
-public class ProducerApplication {
+public class ProducerApplication implements CommandLineRunner {
 
     private final RabbitTemplate rabbit;
     private final WeatherClient weather;
@@ -29,8 +27,23 @@ public class ProducerApplication {
         SpringApplication.run(ProducerApplication.class, args);
     }
 
-    // Laeuft alle 3 Sekunden.
-    @Scheduled(fixedDelay = 3000)
+    @Override
+    public void run(String... args) {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    produce();
+                    // Zufaelliges Intervall zwischen 1 und 5 Sekunden (1000 bis 5000 ms)
+                    int delay = 1000 + random.nextInt(4000);
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
+    }
+
     public void produce() {
         double cloud = weather.getCloudCover();
         // Sonnen-Faktor: 0 Wolken -> 1.0, 100 Wolken -> 0.0
