@@ -11,7 +11,7 @@ import java.util.List;
 
 // REST-API mit zwei Endpunkten. Liest nur aus der Datenbank.
 @RestController
-@CrossOrigin(origins = "*")
+
 public class EnergyController {
 
     private final PercentageRepository percentageRepository;
