@@ -47,7 +47,6 @@ public class PercentageListener {
         // Die Tabelle haelt laut Spezifikation nur die aktuelle Stunde.
         // Deshalb alte Zeilen loeschen und nur die aktuelle speichern.
         Percentage percentage = new Percentage(msg.getHour(), communityDepleted, gridPortion);
-        repository.deleteAll();
         repository.save(percentage);
 
         System.out.println("Percentage gespeichert: " + msg.getHour()

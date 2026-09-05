@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -19,7 +20,7 @@ public class WeatherClient {
             "https://api.open-meteo.com/v1/forecast?latitude=48.2&longitude=16.4&current=cloud_cover";
 
     private final HttpClient http = HttpClient.newHttpClient();
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     // Gibt die Bewoelkung in Prozent zurueck (0 = klar, 100 = bedeckt).
     // Wenn die API nicht erreichbar ist, nehmen wir 50 als Standardwert.
