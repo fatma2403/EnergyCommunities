@@ -20,58 +20,58 @@ import java.util.Locale;
 public class Controller {
 
     //@fxml: sagt javafx dass ein element mit einer variable sich verbindetet
-    @FXML private Label communityLabel; //der fxml label verbindet das label mit dem controller //communitylabel ist das textfeld in der gui
-    @FXML private Label gridLabel; //der fxml label wird verbunden mit dem controller und gridlabel wird auf der gui angezeigt
-    @FXML private Button refreshButton; //der fxml button wird mit dem controller verbunden
+    @FXML private Label communityLabel;
+    @FXML private Label gridLabel;
+    @FXML private Button refreshButton;
 
-    @FXML private DatePicker startDatePicker; //der fxml datepicker wird mit dem controller verbunden
-    @FXML private TextField startTimeField; //der fxml textfield wird mit dem controller verbunden
+    @FXML private DatePicker startDatePicker;
+    @FXML private TextField startTimeField;
     @FXML private DatePicker endDatePicker;
     @FXML private TextField endTimeField;
     @FXML private Button showDataButton;
 
-    @FXML private TableView<EnergyDataFX> historyTable; // der fxml tableview verbindet sich mit dem controller die daten sind energydatafx
-    @FXML private TableColumn<EnergyDataFX, String> hourColumn; //der fxml tablecolumn also tabellenspalte verbindet sich mit dem controller //in der spalte hourcolumn wird string text aus energydatafx angezeigt
-    @FXML private TableColumn<EnergyDataFX, Number> producedColumn; //der fxml tabellenspalte verbindet sich mit dem controller und in der spalte peroduktion wird eine zahl angezeigt aus energydatafx
+    @FXML private TableView<EnergyDataFX> historyTable;
+    @FXML private TableColumn<EnergyDataFX, String> hourColumn;
+    @FXML private TableColumn<EnergyDataFX, Number> producedColumn;
     @FXML private TableColumn<EnergyDataFX, Number> usedColumn;
     @FXML private TableColumn<EnergyDataFX, Number> gridColumn;
 
     @FXML private Label producedTotalLabel;
     @FXML private Label usedTotalLabel;
     @FXML private Label gridTotalLabel;
-    @FXML private Label statusLabel; //der fxml label verbindet sich mit dem controller
+    @FXML private Label statusLabel;
 
-    private final RestClient restClient = new RestClient(); //ich erstelle einen restclient damit ich anfrage an die restapi sende und antworten zurück bekomme
-    private final ObjectMapper mapper = new ObjectMapper(); //das verwende ich damit ich jason in javaobjekte umwandele und java objekte in jason
-    private static final DateTimeFormatter ISO = DateTimeFormatter.ISO_LOCAL_DATE_TIME; //da erselle ich ein datetimeformatter damit datum und uhrzeit richtig gespeichert werden
+    private final RestClient restClient = new RestClient();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private static final DateTimeFormatter ISO = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     @FXML //diese methode wird automatisch aufgerufen wenn die gui startet
     private void initialize() {
-        hourColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getHour())); //stundenspalte da lege ich fest welcher wert angezeigt wird  //C:zeile der tabelle //new simplestringproperty: der weert wird als text angezeigt// c.getvalue: ich hole die daten aus dieser zeile und dann die stunde aus diesen daten
-        producedColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCommunityProduced())); //aus welcher tabelle kommt der wer? aus dem energydatafx objekt aber ursprünglich über die postgresql datenbank über die rest api
+        hourColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getHour()));
+        producedColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCommunityProduced()));
         usedColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCommunityUsed()));
         gridColumn.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getGridUsed()));
 
-        refreshButton.setOnAction(e -> loadCurrent()); //beim klick auf den refreshbutton werden die aktuellen daten angezeigt //e: steht für den klickereignis
-        showDataButton.setOnAction(e -> loadHistorical()); //beim klick auf showdata werden die historischen daten geladen und e steht für den klickereignis
+        refreshButton.setOnAction(e -> loadCurrent());
+        showDataButton.setOnAction(e -> loadHistorical());
     }
 
     private void loadCurrent() {
         try {
-            String body = restClient.getCurrent(); //wir versuchen daten vom server zu holen uns sie als string text zurück zu geben
+            String body = restClient.getCurrent();
             if (body == null || body.isBlank() || body.equals("null")) {
                 communityLabel.setText("- %");
                 gridLabel.setText("- %");
                 statusLabel.setText("Noch keine Daten vorhanden.");
                 return; //dann hören wir einfach auf
             }
-            Percentage p = mapper.readValue(body, Percentage.class); //wir lesen den wert und maachen aus jason text ein java objekt und nehmen den text und machen draus ein prozentwert
+            Percentage p = mapper.readValue(body, Percentage.class);
 
             communityLabel.setText(String.format(Locale.US, "%.2f %% used", p.getCommunityDepleted()));
             gridLabel.setText(String.format(Locale.US, "%.2f %%", p.getGridPortion()));
             statusLabel.setText("Aktuelle Werte geladen.");
         } catch (Exception ex) {
-            statusLabel.setText("Fehler beim Laden: " + ex.getMessage()); //exception ex: es könnten mehrere fehler
+            statusLabel.setText("Fehler beim Laden: " + ex.getMessage());
         }
     }
 
