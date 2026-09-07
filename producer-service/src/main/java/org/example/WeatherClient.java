@@ -20,7 +20,7 @@ public class WeatherClient {
             "https://api.open-meteo.com/v1/forecast?latitude=48.2&longitude=16.4&current=cloud_cover";
 
     private final HttpClient http = HttpClient.newHttpClient();
-    private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    private final ObjectMapper mapper = new ObjectMapper();
 
     // Gibt die Bewoelkung in Prozent zurueck (0 = klar, 100 = bedeckt).
     // Wenn die API nicht erreichbar ist, nehmen wir 50 als Standardwert.

@@ -12,7 +12,8 @@ import java.util.Random;
 // Schickt in zufaelligen 1-5 Sekunden Intervallen eine PRODUCER-Nachricht in die Queue.
 // Wenn die Sonne scheint (wenig Wolken), wird mehr Strom produziert.
 @SpringBootApplication
-public class ProducerApplication implements CommandLineRunner {
+public class
+ProducerApplication implements CommandLineRunner {
 
     private final RabbitTemplate rabbit;
     private final WeatherClient weather;

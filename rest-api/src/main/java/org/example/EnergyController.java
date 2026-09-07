@@ -36,4 +36,11 @@ public class EnergyController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
         return usageRepository.findByHourBetweenOrderByHour(start, end);
     }
+    @GetMapping("/energy/historical/summary")
+    public double[] getSummary(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+        Object[] sums = usageRepository.getSums(start, end);
+        return new double[]{(double) sums[0], (double) sums[1], (double) sums[2]};
+    }
 }
