@@ -42,7 +42,7 @@ public class RestClient {
         }
         return response.body(); //da bekomme ich die antwort des server zurück
     }
-    // GET /energy/historical/summary?start=...&end=...
+    // GET /energy/historical/summary?start=...&end=... //Eine Methode, die diesen neuen Endpoint per HTTP aufruft:
     public String getSummary(String start, String end) throws Exception {
         String url = BASE_URL + "/energy/historical/summary"
                 + "?start=" + URLEncoder.encode(start, StandardCharsets.UTF_8)

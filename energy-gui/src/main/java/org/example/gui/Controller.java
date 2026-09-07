@@ -91,7 +91,7 @@ public class Controller {
             }
             historyTable.setItems(rows);
 
-            // Summen NICHT mehr selbst berechnen, sondern vom Backend holen.
+            // Summen NICHT mehr selbst berechnen, sondern vom Backend holen. //In loadHistorical() wurde die eigene Summierung entfernt (sumProduced += ... gibt es nicht mehr) und stattdessen der neue Endpoint aufgerufen:
             String summaryBody = restClient.getSummary(start, end);
             double[] sums = mapper.readValue(summaryBody, double[].class);
 

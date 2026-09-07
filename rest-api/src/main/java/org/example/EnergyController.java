@@ -36,11 +36,17 @@ public class EnergyController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
         return usageRepository.findByHourBetweenOrderByHour(start, end);
     }
+    //Ein neuer Endpoint, der diese Repository-Methode nutzt und die Summen als JSON-Array zurückgibt:
     @GetMapping("/energy/historical/summary")
     public double[] getSummary(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
-        Object[] sums = usageRepository.getSums(start, end);
-        return new double[]{(double) sums[0], (double) sums[1], (double) sums[2]};
+        Object[] result = usageRepository.getSums(start, end);
+        Object[] sums = (Object[]) result[0];
+
+        double produced = sums[0] != null ? ((Number) sums[0]).doubleValue() : 0.0;
+        double used = sums[1] != null ? ((Number) sums[1]).doubleValue() : 0.0;
+        double grid = sums[2] != null ? ((Number) sums[2]).doubleValue() : 0.0;
+        return new double[]{produced, used, grid};
     }
 }

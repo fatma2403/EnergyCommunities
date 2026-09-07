@@ -11,6 +11,7 @@ public interface HourlyUsageRepository extends JpaRepository<HourlyUsage, LocalD
 
     List<HourlyUsage> findByHourBetweenOrderByHour(LocalDateTime start, LocalDateTime end);
 
+    //Eine Methode, die per SQL-Abfrage direkt in der Datenbank summiert: dafür neue Query und Param. in energycontroller
     @Query("SELECT SUM(h.communityProduced), SUM(h.communityUsed), SUM(h.gridUsed) " +
             "FROM HourlyUsage h WHERE h.hour BETWEEN :start AND :end")
     Object[] getSums(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
